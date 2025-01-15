@@ -40,14 +40,6 @@
             android:text="Priimek" />
 
         <EditText
-            android:id="@+id/teUsername"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Uporabnisko ime" />
-
-        <EditText
             android:id="@+id/teEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -21,16 +21,18 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
+import java.util.Random;
 
 public class AddUserActivity extends AppCompatActivity {
 
     private TextView status;
     private EditText firstname;
     private EditText lastname;
-    private EditText username;
     private EditText password;
     private EditText email;
 
@@ -45,7 +47,6 @@ public class AddUserActivity extends AppCompatActivity {
 
         firstname = (EditText) findViewById(R.id.teName);
         lastname = (EditText) findViewById(R.id.teSurname);
-        username = (EditText) findViewById(R.id.teUsername);
         email = (EditText) findViewById(R.id.teEmail);
         password = (EditText) findViewById(R.id.tePassword);
         status = (TextView) findViewById(R.id.status);
@@ -57,12 +58,33 @@ public class AddUserActivity extends AppCompatActivity {
         this.status.setText("Posting to " + url);
         try {
             JSONObject jsonBody = new JSONObject();
+            Random random = new Random();
+            int randomId = random.nextInt(100000);
+
+            jsonBody.put("id", String.valueOf(randomId));
+
             jsonBody.put("firstName", firstname.getText().toString());
             jsonBody.put("lastName", lastname.getText().toString());
-            jsonBody.put("userName", username.getText().toString());
+            jsonBody.put("userName", email.getText().toString());
             jsonBody.put("email", email.getText().toString());
             jsonBody.put("passwordHash", password.getText().toString());
 
+            jsonBody.put("normalizedUserName", email.getText().toString().toUpperCase());
+            jsonBody.put("normalizedEmail", email.getText().toString().toUpperCase());
+            jsonBody.put("emailConfirmed", false);
+            jsonBody.put("securityStamp", "stamper");
+            jsonBody.put("concurrencyStamp", "tudistamper");
+            jsonBody.put("phoneNumber", null);
+            jsonBody.put("phoneNumberConfirmed", false);
+            jsonBody.put("twoFactorEnabled", false);
+            jsonBody.put("accessFailedCount", 0);
+            jsonBody.put("createdAt", "0001-01-01T00:00:00");
+            jsonBody.put("lockoutEnd", null);
+            jsonBody.put("lockoutEnabled", true);
+            jsonBody.put("friendships", new JSONArray());
+            jsonBody.put("chats", new JSONArray());
+            jsonBody.put("messages", new JSONArray());
+            jsonBody.put("setting", JSONObject.NULL);
 
             final String mRequestBody = jsonBody.toString();
 
